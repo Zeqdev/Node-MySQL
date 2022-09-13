@@ -47,6 +47,22 @@ app.post('/api/companies', (req, res) => {
 	);
 });
 
+app.put('/api/companies/:id', (req, res) => {
+	const { name, city, country } = req.body;
+
+	mysqlConnection.query(
+		'UPDATE api_company SET name = ?, city = ?, country = ? WHERE id = ?',
+		[name, city, country, req.params.id],
+		(err, rows, fields) => {
+			if (!err) {
+				res.json({ status: 'Company updated successfully' });
+			} else {
+				console.log(err);
+			}
+		}
+	);
+});
+
 // Server
 app.listen(3000, () => {
 	console.log('Server is running on port 3000');
