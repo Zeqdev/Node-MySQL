@@ -63,6 +63,20 @@ app.put('/api/companies/:id', (req, res) => {
 	);
 });
 
+app.delete('/api/companies/:id', (req, res) => {
+	mysqlConnection.query(
+		'DELETE FROM api_company WHERE id = ?',
+		[req.params.id],
+		(err, rows, fields) => {
+			if (!err) {
+				res.json({ status: 'Company deleted successfully' });
+			} else {
+				console.log(err);
+			}
+		}
+	);
+});
+
 // Server
 app.listen(3000, () => {
 	console.log('Server is running on port 3000');
